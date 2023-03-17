@@ -1,5 +1,7 @@
 package conecta4;
 
+import java.util.Iterator;
+
 public class Tablero {
 
 	private int[] donde;
@@ -9,12 +11,14 @@ public class Tablero {
 	private final int COLUMNAS = 7;
 
 	private char turno;
+	private boolean ganador;
 
 	public Tablero() {
 
 		turno = 'X';
 		tablero = new char[FILAS][COLUMNAS];
 		donde = new int[COLUMNAS];
+		ganador = false;
 
 		for (int i = 0; i < COLUMNAS; i++) {
 
@@ -32,9 +36,60 @@ public class Tablero {
 				tablero[fila][columna] = turno;
 				donde[columna]--;
 				turno = (turno == 'X') ? 'O' : 'X';
+
+				ganador = hayGanadorVertical(fila, columna);
+//					ganador = ganador || hayGanadorHorizontal(fila, columna);
+				ganador |= hayGanadorHorizontal(fila, columna);
 			}
 		}
 
+	}
+
+	private boolean hayGanadorHorizontal(int fila, int columna) {
+
+		char mirarChar = tablero[fila][columna];
+		int coincidencia = 0;
+
+		while (coincidencia != 3 ) {
+
+			if (tablero[fila][i] == mirarChar) {
+
+				coincidencia++;
+			}
+		}
+
+		boolean devolver = false;
+		if (coincidencia == 3) {
+
+			devolver = true;
+		}
+
+		return devolver;
+	}
+
+	private boolean hayGanadorVertical(int fila, int columna) {
+
+		char mirarChar = tablero[fila][columna];
+		int coincidencia = 0;
+
+		if (fila <= 2) {
+
+			for (int i = fila + 1; i <= fila + 3; i++) {
+
+				if (tablero[i][columna] == mirarChar) {
+
+					coincidencia++;
+				}
+			}
+		}
+
+		boolean devolver = false;
+		if (coincidencia == 3) {
+
+			devolver = true;
+		}
+
+		return devolver;
 	}
 
 	@Override
@@ -60,7 +115,17 @@ public class Tablero {
 			devolver += j + " ";
 		}
 
+		if (ganador) {
+
+			devolver += "\n ya gano alguien\n";
+		}
+
 		return devolver;
+	}
+
+	public boolean hayGanador() {
+
+		return ganador;
 	}
 
 }
