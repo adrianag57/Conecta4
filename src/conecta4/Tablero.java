@@ -47,19 +47,26 @@ public class Tablero {
 
 	private boolean hayGanadorHorizontal(int fila, int columna) {
 
-		char mirarChar = tablero[fila][columna];
-		int coincidencia = 0;
+		char ficha = tablero[fila][columna];
 
-		while (coincidencia != 3 ) {
+		int i = 0;
+		int coincidencias = 0;
+		// mientras no encuentre 4
+		// mientras no llegue al final
+		while ((i < COLUMNAS) && (coincidencias < 4)) {
 
-			if (tablero[fila][i] == mirarChar) {
+			// comparar con la ficha
+			// contar las coincidencias
+			if (tablero[fila][i] == ficha) {
 
-				coincidencia++;
-			}
+				coincidencias++;
+			} else
+				coincidencias = 0;
+			i++;
 		}
 
 		boolean devolver = false;
-		if (coincidencia == 3) {
+		if (coincidencias == 4) {
 
 			devolver = true;
 		}
