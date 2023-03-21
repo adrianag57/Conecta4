@@ -40,9 +40,75 @@ public class Tablero {
 				ganador = hayGanadorVertical(fila, columna);
 //					ganador = ganador || hayGanadorHorizontal(fila, columna);
 				ganador |= hayGanadorHorizontal(fila, columna);
+				ganador |= hayGanadorDiagonalPrincipal(fila, columna);
+				ganador |= hayGanadorDiagonalSecundario(fila, columna);
 			}
 		}
 
+	}
+	
+	private boolean hayGanadorDiagonalSecundario(int fila, int columna) {
+		
+		int coincidencias = 0;
+
+		int retroceso = (columna < fila) ? columna : fila;
+		char ficha = tablero[fila][columna];
+
+		int i = fila - retroceso;
+		int j = columna - retroceso;
+
+		while ((i < FILAS) && (j < COLUMNAS) && (coincidencias < 4)) {
+
+			// comparar con la ficha
+			// contar las coincidencias
+			if (tablero[i][j] == ficha) {
+
+				coincidencias++;
+			} else
+				coincidencias = 0;
+			i++;
+			j++;
+		}
+
+		boolean devolver = false;
+		if (coincidencias == 4) {
+
+			devolver = true;
+		}
+
+		return devolver;
+	}
+
+	private boolean hayGanadorDiagonalPrincipal(int fila, int columna) {
+
+		int coincidencias = 0;
+
+		int retroceso = (fila < columna) ? fila : columna;
+		char ficha = tablero[fila][columna];
+
+		int i = fila - retroceso;
+		int j = columna - retroceso;
+
+		while ((i < FILAS) && (j < COLUMNAS) && (coincidencias < 4)) {
+
+			// comparar con la ficha
+			// contar las coincidencias
+			if (tablero[i][j] == ficha) {
+
+				coincidencias++;
+			} else
+				coincidencias = 0;
+			i++;
+			j++;
+		}
+
+		boolean devolver = false;
+		if (coincidencias == 4) {
+
+			devolver = true;
+		}
+
+		return devolver;
 	}
 
 	private boolean hayGanadorHorizontal(int fila, int columna) {
